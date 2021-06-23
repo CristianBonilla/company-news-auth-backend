@@ -3,12 +3,7 @@ using System.Linq;
 
 namespace Company.Domain
 {
-    public class RolesPermission : PermissionEntity
-    {
-        public new string Type { get; } = PermissionTypes.CanRoles;
-    }
-
-    public enum RoleTypes
+    enum RoleTypes
     {
         ALL,
         GetRoles,
@@ -17,7 +12,7 @@ namespace Company.Domain
         GetPermissionsByRole
     }
 
-    public class RolesCollection
+    class RolesCollection
     {
         public RolesPermission[] List { get; } =
         {

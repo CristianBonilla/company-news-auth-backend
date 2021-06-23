@@ -3,19 +3,14 @@ using System.Linq;
 
 namespace Company.Domain
 {
-    public class NewsPermission : PermissionEntity
-    {
-        public new string Type { get; } = PermissionTypes.CanNews;
-    }
-
-    public enum NewsType
+    enum NewsType
     {
         ALL,
         GetNews,
         GetNewsById
     }
 
-    public class NewsCollection
+    class NewsCollection
     {
         public NewsPermission[] List { get; } = 
         {

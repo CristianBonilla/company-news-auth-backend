@@ -3,12 +3,7 @@ using System.Linq;
 
 namespace Company.Domain
 {
-    public class UsersPermission : PermissionEntity
-    {
-        public new string Type { get; } = PermissionTypes.CanUsers;
-    }
-
-    public enum UserTypes
+    enum UserTypes
     {
         ALL,
         GetUsers,
@@ -18,7 +13,7 @@ namespace Company.Domain
         RemoveUser
     }
 
-    public class UsersCollection
+    class UsersCollection
     {
         public UsersPermission[] List { get; } =
         {

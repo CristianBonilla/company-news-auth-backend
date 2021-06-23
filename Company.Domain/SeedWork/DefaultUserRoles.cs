@@ -2,7 +2,7 @@ using System;
 
 namespace Company.Domain
 {
-    public abstract class DefaultUserRoles
+    abstract class DefaultUserRoles
     {
         protected static NewsCollection News => new();
         protected static RolesCollection Roles => new();
