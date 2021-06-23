@@ -4,8 +4,7 @@ namespace Company.Domain
 {
     public class UsersPermission : PermissionEntity
     {
-        const string CanUsers = nameof(CanUsers);
-        public new string Type { get; } = CanUsers;
+        public new string Type { get; } = PermissionTypes.CanUsers;
     }
 
     public class Users

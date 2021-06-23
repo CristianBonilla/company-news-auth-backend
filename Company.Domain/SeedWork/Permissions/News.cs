@@ -4,8 +4,7 @@ namespace Company.Domain
 {
     public class NewsPermission : PermissionEntity
     {
-        const string CanNews = nameof(CanNews);
-        public new string Type { get; } = CanNews;
+        public new string Type { get; } = PermissionTypes.CanNews;
     }
 
     public class News
