@@ -2,7 +2,7 @@ using System;
 
 namespace Company.Domain
 {
-    public class PermissionEntity
+    public abstract class PermissionEntity
     {
         public Guid Id { get; set; }
         public string Type { get; set; }

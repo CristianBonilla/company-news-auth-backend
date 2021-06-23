@@ -1,49 +1,47 @@
+using System;
+
 namespace Company.Domain
 {
     public class DefaultUserRoles
     {
-        public static (string, Permissions) AdminUser { get; } = (nameof(AdminUser),
-            new()
+        public static (Guid, string, PermissionEntity[]) AdminUser { get; } = (
+            new Guid("c651f92d-d9a1-45e8-9d04-3bb184da7a96"),
+            nameof(AdminUser),
+            new PermissionEntity[]
             {
-                CanRoles = new[] { Roles.ALL },
-                CanUsers = new[] { Users.ALL },
-                CanNews = new[] { News.ALL }
+                Roles.ALL,
+                Users.ALL,
+                News.ALL
             });
-        public static (string, Permissions) VisitorUser { get; } = (nameof(VisitorUser),
-            new()
+        public static (Guid, string, PermissionEntity[]) VisitorUser { get; } = (
+            new Guid("590cb67a-5177-4bda-86e4-e5b80ac333c9"),
+            nameof(VisitorUser),
+            new PermissionEntity[]
             {
-                CanNews = new[] { News.ALL }
+                News.ALL
             });
-        public static (string, Permissions) AssistantUser { get; } = (nameof(AssistantUser),
-            new()
+        public static (Guid, string, PermissionEntity[]) AssistantUser { get; } = (
+            new Guid("f7b2beba-7445-463d-8978-0b3b3940390c"),
+            nameof(AssistantUser),
+            new PermissionEntity[]
             {
-                CanRoles = new[]
-                {
-                    Roles.GetRoles,
-                    Roles.GetRoleById
-                },
-                CanUsers = new[]
-                {
-                    Users.GetUsers,
-                    Users.GetUserById
-                },
-                CanNews = new[] { News.ALL }
+                Roles.GetRoles,
+                Roles.GetRoleById,
+                Users.GetUsers,
+                Users.GetUserById,
+                News.ALL
             });
-        public static (string, Permissions) EditorUser { get; } = (nameof(EditorUser),
-            new()
+        public static (Guid, string, PermissionEntity[]) EditorUser { get; } = (
+            new Guid("3cb57f96-7092-4842-a3a4-5e8302f6618d"),
+            nameof(EditorUser),
+            new PermissionEntity[]
             {
-                CanRoles = new[]
-                {
-                    Roles.GetRoles,
-                    Roles.GetRoleById
-                },
-                CanUsers = new[]
-                {
-                    Users.GetUsers,
-                    Users.GetUserById,
-                    Users.EditUser
-                },
-                CanNews = new[] { News.ALL }
+                Roles.GetRoles,
+                Roles.GetRoleById,
+                Users.GetUsers,
+                Users.GetUserById,
+                Users.EditUser,
+                News.ALL
             });
     }
 }
