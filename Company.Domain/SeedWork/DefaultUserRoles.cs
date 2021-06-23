@@ -2,56 +2,48 @@ namespace Company.Domain
 {
     public class DefaultUserRoles
     {
-        public static (string, Permissions) AdminUser
-        {
-            get => (nameof(AdminUser), new()
+        public static (string, Permissions) AdminUser { get; } = (nameof(AdminUser),
+            new()
             {
-                CanRoles = new[] { RolePermissions.ALL },
-                CanUsers = new[] { UserPermissions.ALL },
-                CanNews = new[] { NewsPermissions.ALL }
+                CanRoles = new[] { Roles.ALL },
+                CanUsers = new[] { Users.ALL },
+                CanNews = new[] { News.ALL }
             });
-        }
-        public static (string, Permissions) VisitorUser
-        {
-            get => (nameof(VisitorUser), new()
+        public static (string, Permissions) VisitorUser { get; } = (nameof(VisitorUser),
+            new()
             {
-                CanNews = new[] { NewsPermissions.ALL }
+                CanNews = new[] { News.ALL }
             });
-        }
-        public static (string, Permissions) AssistantUser
-        {
-            get => (nameof(AssistantUser), new()
+        public static (string, Permissions) AssistantUser { get; } = (nameof(AssistantUser),
+            new()
             {
                 CanRoles = new[]
                 {
-                    RolePermissions.GetRoles,
-                    RolePermissions.GetRoleById
+                    Roles.GetRoles,
+                    Roles.GetRoleById
                 },
                 CanUsers = new[]
                 {
-                    UserPermissions.GetUsers,
-                    UserPermissions.GetUserById
+                    Users.GetUsers,
+                    Users.GetUserById
                 },
-                CanNews = new[] { NewsPermissions.ALL }
+                CanNews = new[] { News.ALL }
             });
-        }
-        public static (string, Permissions) EditorUser
-        {
-            get => (nameof(EditorUser), new()
+        public static (string, Permissions) EditorUser { get; } = (nameof(EditorUser),
+            new()
             {
                 CanRoles = new[]
                 {
-                    RolePermissions.GetRoles,
-                    RolePermissions.GetRoleById
+                    Roles.GetRoles,
+                    Roles.GetRoleById
                 },
                 CanUsers = new[]
                 {
-                    UserPermissions.GetUsers,
-                    UserPermissions.GetUserById,
-                    UserPermissions.EditUser
+                    Users.GetUsers,
+                    Users.GetUserById,
+                    Users.EditUser
                 },
-                CanNews = new[] { NewsPermissions.ALL }
+                CanNews = new[] { News.ALL }
             });
-        }
     }
 }
