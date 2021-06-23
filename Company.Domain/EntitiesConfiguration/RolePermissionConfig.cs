@@ -24,6 +24,7 @@ namespace Company.Domain
                 .IsRequired();
             builder.HasIndex(index => new { index.Name })
                 .IsUnique();
+            builder.HasData(SeedData.SeedRoles);
         }
 
         public void Configure(EntityTypeBuilder<PermissionEntity> builder)
@@ -53,6 +54,7 @@ namespace Company.Domain
                 .HasValue<UsersPermission>(PermissionTypes.CanUsers)
                 .HasValue<NewsPermission>(PermissionTypes.CanNews)
                 .IsComplete();
+            builder.HasData(SeedData.SeedPermissions);
         }
 
         public void Configure(EntityTypeBuilder<RolePermissionEntity> builder)
@@ -65,6 +67,7 @@ namespace Company.Domain
             builder.HasOne(one => one.Permission)
                 .WithMany()
                 .HasForeignKey(key => key.PermissionId);
+            builder.HasData(SeedData.SeedRolePermissionList);
         }
     }
 }

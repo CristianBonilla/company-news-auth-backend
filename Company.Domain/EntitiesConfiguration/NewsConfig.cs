@@ -22,6 +22,7 @@ namespace Company.Domain
                 .HasDefaultValueSql("GETDATE()");
             builder.Property(property => property.Updated)
                 .IsRequired();
+            builder.HasData(SeedData.SeedNews);
         }
     }
 }
