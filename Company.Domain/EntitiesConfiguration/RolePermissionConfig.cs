@@ -48,6 +48,11 @@ namespace Company.Domain
                 .IsRequired();
             builder.HasIndex(index => new { index.Type, index.Name })
                 .IsUnique();
+            builder.HasDiscriminator(discriminator => discriminator.Type)
+                .HasValue<RolesPermission>(PermissionTypes.CanRoles)
+                .HasValue<UsersPermission>(PermissionTypes.CanUsers)
+                .HasValue<NewsPermission>(PermissionTypes.CanNews)
+                .IsComplete();
         }
 
         public void Configure(EntityTypeBuilder<RolePermissionEntity> builder)
