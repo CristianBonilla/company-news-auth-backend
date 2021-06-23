@@ -18,10 +18,9 @@ namespace Company.Domain
             builder.Property(property => property.Description)
                 .HasColumnType("nvarchar(max)")
                 .IsRequired();
-            builder.Property(property => property.Creation)
-                .HasDefaultValueSql("GETDATE()");
             builder.Property(property => property.Updated)
-                .IsRequired();
+                .HasDefaultValueSql("GETDATE()")
+                .ValueGeneratedOnAddOrUpdate();
             builder.HasData(SeedData.SeedNews);
         }
     }
