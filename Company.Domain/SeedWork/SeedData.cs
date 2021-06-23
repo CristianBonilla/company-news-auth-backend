@@ -1,11 +1,10 @@
-using System.Linq;
 using System.Collections.Generic;
 
 namespace Company.Domain
 {
-    class SeedData
+    class SeedData : DefaultUserRoles
     {
-        public static NewsEntity[] SeedNews { get; } = new NewsEntity[]
+        public static IEnumerable<NewsEntity> SeedNews { get; } = new NewsEntity[]
         {
             new()
             {
@@ -39,48 +38,58 @@ namespace Company.Domain
             }
         };
 
-        public static RoleEntity[] SeedRoles { get; } = new[]
+        public static IEnumerable<RoleEntity> SeedRoles { get; } = new[]
         {
-            DefaultUserRoles.AdminUser.Role,
-            DefaultUserRoles.VisitorUser.Role,
-            DefaultUserRoles.AssistantUser.Role,
-            DefaultUserRoles.EditorUser.Role
+            AdminUser.Role,
+            VisitorUser.Role,
+            AssistantUser.Role,
+            EditorUser.Role
         };
 
-        public static PermissionEntity[] SeedPermissions { get; } = new PermissionEntity[]
+        public static IEnumerable<PermissionEntity> SeedPermissions
         {
-            Roles.ALL,
-            Roles.GetRoles,
-            Roles.GetRoleById,
-            Roles.GetPermissions,
-            Roles.GetPermissionsByRole,
-            Users.ALL,
-            Users.GetUsers,
-            Users.GetUserById,
-            Users.AddUser,
-            Users.EditUser,
-            Users.RemoveUser,
-            News.ALL,
-            News.GetNews,
-            News.GetNewsById
-        };
+            get
+            {
+                return GetPermissions();
 
-        public static RolePermissionEntity[] SeedRolePermissionList()
-        {
-            var allRolePermissionList = RolePermissionList(DefaultUserRoles.AdminUser)
-                .Concat(RolePermissionList(DefaultUserRoles.VisitorUser))
-                .Concat(RolePermissionList(DefaultUserRoles.AssistantUser))
-                .Concat(RolePermissionList(DefaultUserRoles.EditorUser));
-
-            return allRolePermissionList.ToArray();
+                static IEnumerable<PermissionEntity> GetPermissions()
+                {
+                    foreach (RolesPermission permission in Roles.List)
+                        yield return permission;
+                    foreach (UsersPermission permission in Users.List)
+                        yield return permission;
+                    foreach (NewsPermission permission in News.List)
+                        yield return permission;
+                }
+            }
         }
 
-        private static IEnumerable<RolePermissionEntity> RolePermissionList((RoleEntity Role, PermissionEntity[] Permissions) defaultUserRole)
+        public static IEnumerable<RolePermissionEntity> SeedRolePermissionList
         {
-            var (Role, Permissions) = defaultUserRole;
+            get
+            {
+                return GetRolePermissionList();
 
-            foreach (PermissionEntity permission in Permissions)
-                yield return new() { Role = Role, Permission = permission };
+                static IEnumerable<RolePermissionEntity> GetRolePermissionList()
+                {
+                    foreach (RolePermissionEntity rolePermission in Get(AdminUser))
+                        yield return rolePermission;
+                    foreach (RolePermissionEntity rolePermission in Get(EditorUser))
+                        yield return rolePermission;
+                    foreach (RolePermissionEntity rolePermission in Get(AssistantUser))
+                        yield return rolePermission;
+                    foreach (RolePermissionEntity rolePermission in Get(VisitorUser))
+                        yield return rolePermission;
+
+                    static IEnumerable<RolePermissionEntity> Get((RoleEntity Role, PermissionEntity[] Permissions) defaultUserRole)
+                    {
+                        var (Role, Permissions) = defaultUserRole;
+
+                        foreach (PermissionEntity permission in Permissions)
+                            yield return new() { Role = Role, Permission = permission };
+                    }
+                }
+            }
         }
     }
 }
