@@ -4,8 +4,8 @@ namespace Company.Domain
 {
     public class Permissions : IPermissions
     {
-        public ICollection<PermissionEntity> CanRoles { get; set; } = new HashSet<PermissionEntity>();
-        public ICollection<PermissionEntity> CanUsers { get; set; } = new HashSet<PermissionEntity>();
-        public ICollection<PermissionEntity> CanNews { get; set; } = new HashSet<PermissionEntity>();
+        public ICollection<RolesPermission> CanRoles { get; set; } = new HashSet<RolesPermission>();
+        public ICollection<UsersPermission> CanUsers { get; set; } = new HashSet<UsersPermission>();
+        public ICollection<NewsPermission> CanNews { get; set; } = new HashSet<NewsPermission>();
     }
 }

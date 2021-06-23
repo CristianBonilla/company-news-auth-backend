@@ -4,8 +4,8 @@ namespace Company.Domain
 {
     public interface IPermissions
     {
-        ICollection<PermissionEntity> CanRoles { get; set; }
-        ICollection<PermissionEntity> CanUsers { get; set; }
-        ICollection<PermissionEntity> CanNews { get; set; }
+        ICollection<RolesPermission> CanRoles { get; set; }
+        ICollection<UsersPermission> CanUsers { get; set; }
+        ICollection<NewsPermission> CanNews { get; set; }
     }
 }
