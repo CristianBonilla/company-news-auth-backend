@@ -15,8 +15,4 @@
     <ProjectReference Include="..\Company.Infrastructure\Company.Infrastructure.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="EntitiesConfiguration\" />
-  </ItemGroup>
-
 </Project>
