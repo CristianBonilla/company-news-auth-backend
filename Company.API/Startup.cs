@@ -29,6 +29,12 @@ namespace Company.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+
+            string connectionString = Configuration.GetConnectionString("CompanyAuthConnection");
+            DataDirectoryConfig.SetDataDirectoryPath(ref connectionString);
+
+            services.AddDbContextPool<CompanyContext>(options => options.UseSqlServer(connectionString));
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Company.API", Version = "v1" });
