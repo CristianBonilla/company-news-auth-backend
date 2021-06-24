@@ -5,7 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Company.API
 {
-    public class DbInstaller : IInstaller
+    class DbInstaller : IInstaller
     {
         const string CompanyAuthConnection = nameof(CompanyAuthConnection);
 

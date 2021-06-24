@@ -4,7 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Company.API
 {
-    public class CommonInstaller : IInstaller
+    class CommonInstaller : IInstaller
     {
         public void InstallServices(IServiceCollection services, IConfiguration _)
         {
