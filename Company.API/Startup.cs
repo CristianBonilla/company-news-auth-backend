@@ -1,18 +1,16 @@
+using System;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Collections.Generic;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using Microsoft.OpenApi.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Company.Domain;
+using Autofac;
 
 namespace Company.API
 {
@@ -29,6 +27,12 @@ namespace Company.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.InstallServicesFromAssembly(Configuration);
+        }
+
+        // Register your own things directly with Autofac here.
+        public void ConfigureContainer(ContainerBuilder builder)
+        {
+            builder.RegisterModule<CompanyModule>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
