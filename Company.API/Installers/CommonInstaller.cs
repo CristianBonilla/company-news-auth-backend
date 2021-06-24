@@ -20,9 +20,9 @@ namespace Company.API
             services.AddControllers()
                 .AddNewtonsoftJson(JsonSerializer);
 
-            IConfigurationSection swaggerSection = configuration.GetSection(nameof(SwaggerSettings));
-            services.Configure<SwaggerSettings>(swaggerSection);
-            SwaggerSettings swagger = swaggerSection.Get<SwaggerSettings>();
+            IConfigurationSection swaggerSection = configuration.GetSection(nameof(SwaggerOptions));
+            services.Configure<SwaggerOptions>(swaggerSection);
+            SwaggerOptions swagger = swaggerSection.Get<SwaggerOptions>();
             services.AddSwaggerGen(options =>
             {
                 options.SwaggerDoc("v1", new()

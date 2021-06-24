@@ -44,7 +44,7 @@ namespace Company.API
             {
                 app.UseDeveloperExceptionPage();
 
-                SwaggerSettings swagger = Configuration.GetSection(nameof(SwaggerSettings)).Get<SwaggerSettings>();
+                SwaggerOptions swagger = Configuration.GetSection(nameof(SwaggerOptions)).Get<SwaggerOptions>();
                 app.UseSwagger(options => options.RouteTemplate = swagger.JsonRoute);
                 app.UseSwaggerUI(c => c.SwaggerEndpoint(swagger.UIEndpoint, swagger.Description));
             }

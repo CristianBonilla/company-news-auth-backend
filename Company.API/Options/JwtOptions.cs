@@ -1,6 +1,6 @@
 namespace Company.API
 {
-    class JwtSettings
+    class JwtOptions
     {
         public string Secret { get; set; }
     }
