@@ -44,7 +44,6 @@ namespace Company.Domain
                 Description = "Después de un año de ausencia por la pandemia, finalmente el Electronic Entertainment Expo (E3) volvió con varias novedades para los amantes de los videojuegos, aunque no cumplió todas las expectativas en materia de los anuncios que se tenían presupuestados"
             }
         };
-
         public static IEnumerable<RoleEntity> SeedRoles { get; } = new[]
         {
             AdminUser.Role,
@@ -53,11 +52,12 @@ namespace Company.Domain
             EditorUser.Role
         };
 
-        public static IEnumerable<RolesPermission> SeedRolesPermission => Roles.List;
-
-        public static IEnumerable<UsersPermission> SeedUsersPermission => Users.List;
-
-        public static IEnumerable<NewsPermission> SeedNewsPermission => News.List;
+        public class SeedPermissions
+        {
+            public static IEnumerable<RolesPermission> SeedRoles => Roles.List;
+            public static IEnumerable<UsersPermission> SeedUsers => Users.List;
+            public static IEnumerable<NewsPermission> SeedNews => News.List;
+        }
 
         public static IEnumerable<RolePermissionEntity> SeedRolePermissionList
         {

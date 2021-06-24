@@ -66,7 +66,7 @@ namespace Company.Domain
             builder.HasOne(one => one.Permission)
                 .WithMany()
                 .HasForeignKey(key => key.PermissionId);
-            builder.HasData(SeedData.SeedRolePermissionList);
+            //builder.HasData(SeedData.SeedRolePermissionList);
         }
     }
 }
