@@ -1,5 +1,8 @@
+using Company.Domain;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using System;
@@ -12,9 +15,11 @@ namespace Company.API
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static async void Main(string[] args)
         {
-            CreateHostBuilder(args).Build().Run();
+            IHost host = CreateHostBuilder(args).Build();
+            await DbMigrationStart<CompanyContext>(host);
+            await host.RunAsync();
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
@@ -23,5 +28,12 @@ namespace Company.API
                 {
                     webBuilder.UseStartup<Startup>();
                 });
+
+        private static async Task DbMigrationStart<TContext>(IHost host) where TContext : DbContext
+        {
+            using IServiceScope serviceScope = host.Services.CreateScope();
+            TContext dbContext = serviceScope.ServiceProvider.GetRequiredService<TContext>();
+            await dbContext.Database.MigrateAsync();
+        }
     }
 }
