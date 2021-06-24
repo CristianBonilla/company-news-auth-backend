@@ -54,7 +54,6 @@ namespace Company.Domain
                 .HasValue<UsersPermission>(PermissionTypes.CanUsers)
                 .HasValue<NewsPermission>(PermissionTypes.CanNews)
                 .IsComplete();
-            builder.HasData(SeedData.SeedPermissions);
         }
 
         public void Configure(EntityTypeBuilder<RolePermissionEntity> builder)
