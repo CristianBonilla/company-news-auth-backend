@@ -61,6 +61,6 @@ namespace Company.Domain
             }
         };
 
-        public UsersPermission this[UserTypes type] => List.SingleOrDefault(permission => permission.Name == Enum.GetName(type));
+        public Guid? this[UserTypes type] => List.SingleOrDefault(permission => permission.Name == Enum.GetName(type))?.Id;
     }
 }

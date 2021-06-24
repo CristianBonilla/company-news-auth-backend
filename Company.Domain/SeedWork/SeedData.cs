@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Collections.Generic;
 
 namespace Company.Domain
@@ -63,7 +64,7 @@ namespace Company.Domain
         {
             get
             {
-                return GetRolePermissionList();
+                return GetRolePermissionList().ToArray();
 
                 static IEnumerable<RolePermissionEntity> GetRolePermissionList()
                 {
@@ -76,12 +77,12 @@ namespace Company.Domain
                     foreach (RolePermissionEntity rolePermission in Get(VisitorUser))
                         yield return rolePermission;
 
-                    static IEnumerable<RolePermissionEntity> Get((RoleEntity Role, PermissionEntity[] Permissions) defaultUserRole)
+                    static IEnumerable<RolePermissionEntity> Get((RoleEntity Role, Guid[] PermissionIDs) defaultUserRole)
                     {
-                        var (Role, Permissions) = defaultUserRole;
+                        var (Role, PermissionIDs) = defaultUserRole;
 
-                        foreach (PermissionEntity permission in Permissions)
-                            yield return new() { Role = Role, Permission = permission };
+                        foreach (Guid permissionId in PermissionIDs)
+                            yield return new() { RoleId = Role.Id, PermissionId = permissionId };
                     }
                 }
             }

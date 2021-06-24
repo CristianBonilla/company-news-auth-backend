@@ -53,6 +53,6 @@ namespace Company.Domain
             }
         };
 
-        public RolesPermission this[RoleTypes type] => List.SingleOrDefault(permission => permission.Name == Enum.GetName(type));
+        public Guid? this[RoleTypes type] => List.SingleOrDefault(permission => permission.Name == Enum.GetName(type))?.Id;
     }
 }

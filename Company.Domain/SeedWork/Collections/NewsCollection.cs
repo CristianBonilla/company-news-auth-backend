@@ -37,6 +37,6 @@ namespace Company.Domain
             }
         };
 
-        public NewsPermission this[NewsType type] => List.SingleOrDefault(permission => permission.Name == Enum.GetName(type));
+        public Guid? this[NewsType type] => List.SingleOrDefault(permission => permission.Name == Enum.GetName(type))?.Id;
     }
 }
