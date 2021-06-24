@@ -15,7 +15,7 @@ namespace Company.API
 {
     public class Program
     {
-        public static async void Main(string[] args)
+        public static async Task Main(string[] args)
         {
             IHost host = CreateHostBuilder(args).Build();
             await DbMigrationStart<CompanyContext>(host);
