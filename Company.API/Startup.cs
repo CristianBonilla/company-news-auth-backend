@@ -43,8 +43,10 @@ namespace Company.API
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Company.API v1"));
+
+                SwaggerSettings swagger = Configuration.GetSection(nameof(SwaggerSettings)).Get<SwaggerSettings>();
+                app.UseSwagger(options => options.RouteTemplate = swagger.JsonRoute);
+                app.UseSwaggerUI(c => c.SwaggerEndpoint(swagger.UIEndpoint, swagger.Description));
             }
             app.UseRouting();
             app.UseAuthorization();
