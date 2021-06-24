@@ -28,17 +28,7 @@ namespace Company.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
-
-            string connectionString = Configuration.GetConnectionString("CompanyAuthConnection");
-            DataDirectoryConfig.SetDataDirectoryPath(ref connectionString);
-
-            services.AddDbContextPool<CompanyContext>(options => options.UseSqlServer(connectionString));
-
-            services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Company.API", Version = "v1" });
-            });
+            services.InstallServicesFromAssembly(Configuration);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
