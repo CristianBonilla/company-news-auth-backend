@@ -5,12 +5,13 @@ using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Serialization;
+using Microsoft.AspNetCore.Hosting;
 
 namespace Company.API
 {
     class CommonInstaller : IInstaller
     {
-        public void InstallServices(IServiceCollection services, IConfiguration _)
+        public void InstallServices(IServiceCollection services, IConfiguration configuration, IWebHostEnvironment env)
         {
             services.AddControllers()
                 .AddNewtonsoftJson(JsonSerializer);

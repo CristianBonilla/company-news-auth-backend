@@ -16,17 +16,19 @@ namespace Company.API
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        readonly IWebHostEnvironment env;
+        public IConfiguration Configuration { get; }
+
+        public Startup(IConfiguration configuration, IWebHostEnvironment env)
         {
             Configuration = configuration;
+            this.env = env;
         }
-
-        public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.InstallServicesFromAssembly(Configuration);
+            services.InstallServicesFromAssembly(Configuration, env);
         }
 
         // Register your own things directly with Autofac here.
@@ -36,7 +38,7 @@ namespace Company.API
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app)
         {
             if (env.IsDevelopment())
             {

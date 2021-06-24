@@ -1,18 +1,16 @@
-using System;
+using System.Text;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Text;
-using Microsoft.IdentityModel.Tokens;
 
 namespace Company.API
 {
     class JwtInstaller : IInstaller
     {
-        public void InstallServices(IServiceCollection services, IConfiguration configuration)
+        public void InstallServices(IServiceCollection services, IConfiguration configuration, IWebHostEnvironment env)
         {
             IConfigurationSection jwtSettingsSection = configuration.GetSection(nameof(JwtSettings));
             services.Configure<JwtSettings>(jwtSettingsSection);
@@ -27,7 +25,7 @@ namespace Company.API
             })
             .AddJwtBearer(jwt =>
             {
-                jwt.RequireHttpsMetadata = false; // Development only
+                jwt.RequireHttpsMetadata = !env.IsDevelopment(); // Development only
                 jwt.SaveToken = true;
                 jwt.TokenValidationParameters = new()
                 {

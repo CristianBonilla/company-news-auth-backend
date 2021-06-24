@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using System.Reflection;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -8,7 +9,7 @@ namespace Company.API
 {
     static class InstallerExtensions
     {
-        public static void InstallServicesFromAssembly(this IServiceCollection services, IConfiguration configuration)
+        public static void InstallServicesFromAssembly(this IServiceCollection services, IConfiguration configuration, IWebHostEnvironment env)
         {
             var installers = Assembly.GetExecutingAssembly().GetTypes()
                 .Where(type => typeof(IInstaller).IsAssignableFrom(type) && !type.IsInterface && !type.IsAbstract)
@@ -16,7 +17,7 @@ namespace Company.API
                 .Cast<IInstaller>()
                 .ToArray();
             foreach (IInstaller installer in installers)
-                installer.InstallServices(services, configuration);
+                installer.InstallServices(services, configuration, env);
         }
     }
 }
