@@ -12,11 +12,11 @@ namespace Company.API
     {
         public void InstallServices(IServiceCollection services, IConfiguration configuration, IWebHostEnvironment env)
         {
-            IConfigurationSection jwtSettingsSection = configuration.GetSection(nameof(JwtOptions));
-            services.Configure<JwtOptions>(jwtSettingsSection);
-            JwtOptions jwtSettings = jwtSettingsSection.Get<JwtOptions>();
-            services.AddSingleton(jwtSettings);
-            byte[] key = Encoding.ASCII.GetBytes(jwtSettings.Secret);
+            IConfigurationSection jwtSection = configuration.GetSection(nameof(JwtOptions));
+            services.Configure<JwtOptions>(jwtSection);
+            JwtOptions jwtOptions = jwtSection.Get<JwtOptions>();
+            services.AddSingleton(jwtOptions);
+            byte[] key = Encoding.ASCII.GetBytes(jwtOptions.Secret);
             services.AddAuthentication(auth =>
             {
                 auth.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
