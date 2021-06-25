@@ -12,8 +12,6 @@ namespace Company.API
 {
     class CommonInstaller : IInstaller
     {
-        const string Bearer = nameof(Bearer);
-
         public void InstallServices(IServiceCollection services, IConfiguration configuration, IWebHostEnvironment env)
         {
             services.AddControllers()
@@ -31,7 +29,7 @@ namespace Company.API
                     Description = "Grant permissions depending on the role of the user and list the news available from the company with security",
                     Contact = swagger.Contact
                 });
-                options.AddSecurityDefinition(Bearer, new()
+                options.AddSecurityDefinition(CommonValues.Bearer, new()
                 {
                     Description = "JWT Authentication header using the bearer scheme",
                     Name = "Authentication",
@@ -42,7 +40,7 @@ namespace Company.API
                 {
                     Reference = new OpenApiReference
                     {
-                        Id = Bearer,
+                        Id = CommonValues.Bearer,
                         Type = ReferenceType.SecurityScheme
                     }
                 };

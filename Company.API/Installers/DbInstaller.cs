@@ -8,11 +8,9 @@ namespace Company.API
 {
     class DbInstaller : IInstaller
     {
-        const string CompanyAuthConnection = nameof(CompanyAuthConnection);
-
         public void InstallServices(IServiceCollection services, IConfiguration configuration, IWebHostEnvironment env)
         {
-            string connectionString = configuration.GetConnectionString(CompanyAuthConnection);
+            string connectionString = configuration.GetConnectionString(CommonValues.CompanyAuthConnection);
             DataDirectoryConfig.SetDataDirectoryPath(ref connectionString);
 
             services.AddDbContextPool<CompanyContext>(options => options.UseSqlServer(connectionString));
