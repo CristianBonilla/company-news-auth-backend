@@ -49,6 +49,7 @@ namespace Company.API
                 app.UseSwaggerUI(c => c.SwaggerEndpoint(swagger.UIEndpoint, swagger.Description));
             }
             app.UseRouting();
+            app.UseCors(CommonValues.AllowOrigins);
             app.UseAuthorization();
             app.UseAuthentication();
             app.UseEndpoints(endpoints =>

@@ -16,6 +16,15 @@ namespace Company.API
         {
             services.AddControllers()
                 .AddNewtonsoftJson(JsonSerializer);
+            services.AddCors(options =>
+            {
+                options.AddPolicy(CommonValues.AllowOrigins, builder =>
+                {
+                    builder.AllowAnyOrigin()
+                        .AllowAnyHeader()
+                        .WithMethods("GET", "POST", "PUT", "DELETE");
+                });
+            });
 
             IConfigurationSection swaggerSection = configuration.GetSection(nameof(SwaggerOptions));
             services.Configure<SwaggerOptions>(swaggerSection);
