@@ -4,7 +4,7 @@ using Company.Infrastructure;
 
 namespace Company.API
 {
-    class CompanyModule : Module
+    class DomainModule : Module
     {
         protected override void Load(ContainerBuilder builder)
         {
@@ -12,6 +12,20 @@ namespace Company.API
                 .As(typeof(IRepositoryContext<>));
             builder.RegisterGeneric(typeof(Repository<,>))
                 .As(typeof(IRepository<,>));
+
+            builder.RegisterType<DataContext>()
+                .As<IDataContext>();
+            builder.RegisterType<RoleRepository>()
+                .As<IRoleRepository>();
+            builder.RegisterType<PermissionRepository>()
+                .As<IPermissionRepository>();
+            builder.RegisterType<RolePermissionRepository>()
+                .As<IRolePermissionRepository>();
+            builder.RegisterType<UserRepository>()
+                .As<IUserRepository>();
+            builder.RegisterType<NewsRepository>()
+                .As<INewsRepository>();
+
             builder.RegisterType<RolePermissionService>()
                 .As<IRolePermissionService>();
             builder.RegisterType<UserService>()

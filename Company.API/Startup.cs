@@ -34,7 +34,7 @@ namespace Company.API
         // Register your own things directly with Autofac here.
         public void ConfigureContainer(ContainerBuilder builder)
         {
-            builder.RegisterModule<CompanyModule>();
+            builder.RegisterModule<DomainModule>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
