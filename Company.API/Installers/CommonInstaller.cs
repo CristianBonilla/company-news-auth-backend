@@ -14,6 +14,8 @@ namespace Company.API
         {
             services.AddControllers()
                 .AddNewtonsoftJson(JsonSerializer);
+            services.AddRouting(options => options.LowercaseUrls = true);
+            //Another alternative - services.Configure<RouteOptions>(options => options.LowercaseUrls = true);
             services.AddCors(options =>
             {
                 options.AddPolicy(CommonValues.AllowOrigins, builder =>

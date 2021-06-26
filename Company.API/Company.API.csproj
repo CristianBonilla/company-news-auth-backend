@@ -29,10 +29,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\V1\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\Company.Domain\Company.Domain.csproj" />
     <ProjectReference Include="..\Company.Infrastructure\Company.Infrastructure.csproj" />
   </ItemGroup>
