@@ -8,10 +8,10 @@ namespace Company.Domain
 {
     public class UserService : IUserService
     {
-        readonly IContext context;
+        readonly IDataContext context;
         readonly IUserRepository userRepository;
 
-        public UserService(IContext context, IUserRepository userRepository) =>
+        public UserService(IDataContext context, IUserRepository userRepository) =>
             (this.context, this.userRepository) = (context, userRepository);
 
         public async Task<UserEntity> AddUser(UserEntity user)
