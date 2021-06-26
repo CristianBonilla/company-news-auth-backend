@@ -2,7 +2,7 @@ using System;
 
 namespace Company.API
 {
-    class RoleResponse
+    public class RoleResponse
     {
         public Guid Id { get; set; }
         public string Name { get; set; }

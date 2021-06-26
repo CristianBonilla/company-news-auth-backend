@@ -1,6 +1,6 @@
 namespace Company.API
 {
-    class UserRegisterRequest
+    public class UserRegisterRequest
     {
         public long IdentificationNumber { get; set; }
         public string Username { get; set; }
