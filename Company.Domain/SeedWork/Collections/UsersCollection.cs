@@ -21,7 +21,7 @@ namespace Company.Domain
             {
                 Id = new Guid("d3683aa7-defb-48ea-8459-b17a34a0c363"),
                 Name = nameof(UserTypes.ALL),
-                DisplayName = "Todos",
+                DisplayName = "Todo",
                 Order = 1
             },
             new()

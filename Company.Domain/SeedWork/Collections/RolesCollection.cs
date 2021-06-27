@@ -20,7 +20,7 @@ namespace Company.Domain
             {
                 Id = new Guid("e5472dd9-f0c1-4233-be69-cb59425a8407"),
                 Name = nameof(RoleTypes.ALL),
-                DisplayName = "Todos",
+                DisplayName = "Todo",
                 Order = 1
             },
             new()

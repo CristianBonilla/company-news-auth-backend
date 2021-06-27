@@ -18,7 +18,7 @@ namespace Company.Domain
             {
                 Id = new Guid("4f39c31e-ca99-4782-b585-ae847185a292"),
                 Name = nameof(NewsType.ALL),
-                DisplayName = "Todos",
+                DisplayName = "Todo",
                 Order = 1
             },
             new()

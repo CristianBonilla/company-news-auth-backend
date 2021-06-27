@@ -21,6 +21,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		README.md = README.md
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Scripts", "Scripts", "{C50B78CD-63C7-47F1-A3BB-147BC4950615}"
+	ProjectSection(SolutionItems) = preProject
+		Scripts\change-displayname_ALL-in-permissions.sql = Scripts\change-displayname_ALL-in-permissions.sql
+		Scripts\company-news-auth-script.sql = Scripts\company-news-auth-script.sql
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
