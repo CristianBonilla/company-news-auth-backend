@@ -21,7 +21,8 @@ namespace Company.Domain
 
         public IAsyncEnumerable<NewsEntity> GetNews()
         {
-            var news = newsRepository.Get(null, order => order.OrderBy(news => news.Updated))
+            var news = newsRepository.Get(null, order => order.OrderByDescending(news => news.Updated)
+                .ThenBy(news => news.Title))
                 .ToAsyncEnumerable();
 
             return news;
