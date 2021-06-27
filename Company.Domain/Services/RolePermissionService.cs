@@ -39,7 +39,8 @@ namespace Company.Domain
 
         public IAsyncEnumerable<PermissionEntity> GetPermissions()
         {
-            var permissions = permissionRepository.Get(null, order => order.OrderBy(permission => permission.Name))
+            var permissions = permissionRepository.Get(null, order => order.OrderBy(permission => permission.Type)
+                .ThenBy(permission => permission.Order))
                 .ToAsyncEnumerable();
 
             return permissions;
@@ -49,7 +50,8 @@ namespace Company.Domain
         {
             var permissions = rolePermissionRepository.Get(permission => permission.RoleId == role.Id)
                 .Select(permission => permissionRepository.Find(permission.PermissionId))
-                .OrderBy(order => order.Type)
+                .OrderBy(permission => permission.Type)
+                .ThenBy(permission => permission.Order)
                 .ToAsyncEnumerable();
 
             return permissions;
