@@ -44,10 +44,10 @@ namespace Company.API.Controllers.V1
             RoleEntity roleFound = await rolePermissionService.FindRole(role => role.Id == roleId);
             if (roleFound == null)
                 return NotFound(new { Errors = new[] { "Unable to get permissions if role does not exist" } });
-            var permissions = rolePermissionService.GetPermissionsByRole(roleFound)
-                .Select(mapper.Map<PermissionResponse>);
+            var permissions = rolePermissionService.GetPermissionsByRole(roleFound);
+            var permissionsMapped = mapper.Map<IAsyncEnumerable<PermissionResponse>>(permissions);
 
-            return Ok(permissions);
+            return Ok(permissionsMapped);
         }
     }
 }

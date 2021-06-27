@@ -1,5 +1,6 @@
 using AutoMapper;
 using Company.Domain;
+using System.Collections.Generic;
 
 namespace Company.API
 {
@@ -9,9 +10,9 @@ namespace Company.API
         {
             CreateMap<RoleEntity, RoleResponse>();
             CreateMap<NewsEntity, NewsResponse>();
-            CreateMap<RolesPermission, PermissionResponse>();
-            CreateMap<UsersPermission, PermissionResponse>();
-            CreateMap<NewsPermission, PermissionResponse>();
+            CreateMap<PermissionEntity, PermissionDetailResponse>();
+            CreateMap<IAsyncEnumerable<PermissionEntity>, IAsyncEnumerable<PermissionResponse>>()
+                .ConvertUsing<PermissionResponseConverter>();
             CreateMap<UserRegisterRequest, UserEntity>()
                 .ForMember(member => member.Id, options => options.Ignore())
                 .ForMember(member => member.RoleId, options => options.Ignore())

@@ -20,11 +20,12 @@ namespace Company.API.Controllers.V1
             (this.mapper, this.rolePermissionService) = (mapper, rolePermissionService);
 
         [HttpGet]
-        public async IAsyncEnumerable<PermissionResponse> Get()
+        public IAsyncEnumerable<PermissionResponse> Get()
         {
             var permissions = rolePermissionService.GetPermissions();
-            await foreach (PermissionEntity permission in permissions)
-                yield return mapper.Map<PermissionResponse>(permission);
+            var permissionsMapped = mapper.Map<IAsyncEnumerable<PermissionResponse>>(permissions);
+
+            return permissionsMapped;
         }
     }
 }
