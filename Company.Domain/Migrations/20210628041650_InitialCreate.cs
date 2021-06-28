@@ -117,12 +117,12 @@ namespace Company.Domain.Migrations
                 columns: new[] { "Id", "Description", "Title" },
                 values: new object[,]
                 {
-                    { new Guid("f0660d32-93f8-438b-80db-8df975641bc8"), "Figuran ejecutivas de D1, Cencosud, Cerrejón y Comparta. Tres de ellas asumieron en los últimos dos años", "Solo hay 4 mujeres en los CEO de las 100 empresas más grandes" },
-                    { new Guid("cb7d7cd3-0510-4203-9176-2f6b3b937519"), "El préstamo, incluye recursos para la construcción del Parque Solar San Fernando (Meta) por cerca de US$35 millones", "Crédito de Scotiabank Colpatria por US$100 millones a AES Colombia" },
-                    { new Guid("5aad402e-a2f3-4103-83e1-097e4219a4f8"), "Se trata de Shopify, que brindará soporte y apoyo a comerciantes que no usan directamente su plataforma", "Google y Facebook firman asociación con empresa de pago en línea" },
-                    { new Guid("0c42bc5e-9c6d-45c9-8bf6-ae3983da4dd4"), "Los delincuentes envían cartas a las viviendas de sus víctimas haciéndose pasar por la compañía Ledger. En el documento piden a las personas compartir su información en un nuevo dispositivo para supuestamente mantener los datos seguros", "Bitcóin: hackers tienen nuevo método para robar criptomonedas" },
-                    { new Guid("6c58d694-e913-4b81-a74b-26d3795d48a1"), "Habi, la startup con sede en Colombia, anunció este miércoles que recaudó 100 millones de dólares en la ronda de financiación de serie B por parte de SoftBank Latin American Fund, junto con inversores de Inspired Capital, Tiger Global, Homebrew y 8VC", "'Startup' Habi recauda 100 millones de dólares en ronda de inversión" },
-                    { new Guid("f9b55d06-c802-4e39-b371-dbbf097ca9cb"), "Después de un año de ausencia por la pandemia, finalmente el Electronic Entertainment Expo (E3) volvió con varias novedades para los amantes de los videojuegos, aunque no cumplió todas las expectativas en materia de los anuncios que se tenían presupuestados", "E3: los mejores anuncios que dejó el evento en su edición virtual" }
+                    { new Guid("47d0fc63-ccd3-48c6-825c-496a56db4adb"), "Figuran ejecutivas de D1, Cencosud, Cerrejón y Comparta. Tres de ellas asumieron en los últimos dos años", "Solo hay 4 mujeres en los CEO de las 100 empresas más grandes" },
+                    { new Guid("056cff93-297c-4145-8035-ded5cbc32c61"), "El préstamo, incluye recursos para la construcción del Parque Solar San Fernando (Meta) por cerca de US$35 millones", "Crédito de Scotiabank Colpatria por US$100 millones a AES Colombia" },
+                    { new Guid("9e77ccaf-98f6-426f-9f95-df113d985235"), "Se trata de Shopify, que brindará soporte y apoyo a comerciantes que no usan directamente su plataforma", "Google y Facebook firman asociación con empresa de pago en línea" },
+                    { new Guid("b0ec35d4-9a19-4e6d-8cd2-817b968c2bb8"), "Los delincuentes envían cartas a las viviendas de sus víctimas haciéndose pasar por la compañía Ledger. En el documento piden a las personas compartir su información en un nuevo dispositivo para supuestamente mantener los datos seguros", "Bitcóin: hackers tienen nuevo método para robar criptomonedas" },
+                    { new Guid("a6e7bad2-ac9c-407a-a0bb-2d32b51e794a"), "Habi, la startup con sede en Colombia, anunció este miércoles que recaudó 100 millones de dólares en la ronda de financiación de serie B por parte de SoftBank Latin American Fund, junto con inversores de Inspired Capital, Tiger Global, Homebrew y 8VC", "'Startup' Habi recauda 100 millones de dólares en ronda de inversión" },
+                    { new Guid("c2cca9ea-b8c1-4abf-b70c-e47be5f06f92"), "Después de un año de ausencia por la pandemia, finalmente el Electronic Entertainment Expo (E3) volvió con varias novedades para los amantes de los videojuegos, aunque no cumplió todas las expectativas en materia de los anuncios que se tenían presupuestados", "E3: los mejores anuncios que dejó el evento en su edición virtual" }
                 });
 
             migrationBuilder.InsertData(
@@ -153,10 +153,10 @@ namespace Company.Domain.Migrations
                 columns: new[] { "Id", "DisplayName", "Name" },
                 values: new object[,]
                 {
-                    { new Guid("3cb57f96-7092-4842-a3a4-5e8302f6618d"), "Editor", "EditorUser" },
-                    { new Guid("590cb67a-5177-4bda-86e4-e5b80ac333c9"), "Visitante", "VisitorUser" },
                     { new Guid("c651f92d-d9a1-45e8-9d04-3bb184da7a96"), "Administrador", "AdminUser" },
-                    { new Guid("f7b2beba-7445-463d-8978-0b3b3940390c"), "Asistente", "AssistantUser" }
+                    { new Guid("f7b2beba-7445-463d-8978-0b3b3940390c"), "Asistente", "AssistantUser" },
+                    { new Guid("590cb67a-5177-4bda-86e4-e5b80ac333c9"), "Visitante", "VisitorUser" },
+                    { new Guid("3cb57f96-7092-4842-a3a4-5e8302f6618d"), "Editor", "EditorUser" }
                 });
 
             migrationBuilder.InsertData(
@@ -165,20 +165,20 @@ namespace Company.Domain.Migrations
                 columns: new[] { "PermissionId", "RoleId" },
                 values: new object[,]
                 {
-                    { new Guid("4f39c31e-ca99-4782-b585-ae847185a292"), new Guid("c651f92d-d9a1-45e8-9d04-3bb184da7a96") },
                     { new Guid("4f39c31e-ca99-4782-b585-ae847185a292"), new Guid("590cb67a-5177-4bda-86e4-e5b80ac333c9") },
                     { new Guid("4f39c31e-ca99-4782-b585-ae847185a292"), new Guid("f7b2beba-7445-463d-8978-0b3b3940390c") },
                     { new Guid("4f39c31e-ca99-4782-b585-ae847185a292"), new Guid("3cb57f96-7092-4842-a3a4-5e8302f6618d") },
+                    { new Guid("4f39c31e-ca99-4782-b585-ae847185a292"), new Guid("c651f92d-d9a1-45e8-9d04-3bb184da7a96") },
                     { new Guid("e5472dd9-f0c1-4233-be69-cb59425a8407"), new Guid("c651f92d-d9a1-45e8-9d04-3bb184da7a96") },
-                    { new Guid("69778186-75fd-445d-9993-b9f9b35d78bc"), new Guid("3cb57f96-7092-4842-a3a4-5e8302f6618d") },
                     { new Guid("69778186-75fd-445d-9993-b9f9b35d78bc"), new Guid("f7b2beba-7445-463d-8978-0b3b3940390c") },
-                    { new Guid("bfaa9995-bfa4-4c5b-b4dc-754be406cb18"), new Guid("3cb57f96-7092-4842-a3a4-5e8302f6618d") },
+                    { new Guid("69778186-75fd-445d-9993-b9f9b35d78bc"), new Guid("3cb57f96-7092-4842-a3a4-5e8302f6618d") },
                     { new Guid("bfaa9995-bfa4-4c5b-b4dc-754be406cb18"), new Guid("f7b2beba-7445-463d-8978-0b3b3940390c") },
+                    { new Guid("bfaa9995-bfa4-4c5b-b4dc-754be406cb18"), new Guid("3cb57f96-7092-4842-a3a4-5e8302f6618d") },
                     { new Guid("d3683aa7-defb-48ea-8459-b17a34a0c363"), new Guid("c651f92d-d9a1-45e8-9d04-3bb184da7a96") },
-                    { new Guid("f6176536-ac08-4607-b003-11caa3cc5e31"), new Guid("3cb57f96-7092-4842-a3a4-5e8302f6618d") },
                     { new Guid("f6176536-ac08-4607-b003-11caa3cc5e31"), new Guid("f7b2beba-7445-463d-8978-0b3b3940390c") },
-                    { new Guid("cb5095c0-02cd-4b10-8666-09eaafeda595"), new Guid("3cb57f96-7092-4842-a3a4-5e8302f6618d") },
+                    { new Guid("f6176536-ac08-4607-b003-11caa3cc5e31"), new Guid("3cb57f96-7092-4842-a3a4-5e8302f6618d") },
                     { new Guid("cb5095c0-02cd-4b10-8666-09eaafeda595"), new Guid("f7b2beba-7445-463d-8978-0b3b3940390c") },
+                    { new Guid("cb5095c0-02cd-4b10-8666-09eaafeda595"), new Guid("3cb57f96-7092-4842-a3a4-5e8302f6618d") },
                     { new Guid("942d6f21-a7f7-43cd-9588-23657911fea2"), new Guid("3cb57f96-7092-4842-a3a4-5e8302f6618d") }
                 });
 

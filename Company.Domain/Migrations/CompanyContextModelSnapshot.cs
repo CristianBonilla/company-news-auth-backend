@@ -48,42 +48,42 @@ namespace Company.Domain.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("3f1e5227-b380-4df1-bdd6-fd30c9ef6649"),
+                            Id = new Guid("47d0fc63-ccd3-48c6-825c-496a56db4adb"),
                             Description = "Figuran ejecutivas de D1, Cencosud, Cerrejón y Comparta. Tres de ellas asumieron en los últimos dos años",
                             Title = "Solo hay 4 mujeres en los CEO de las 100 empresas más grandes",
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            Id = new Guid("eac51bda-51f6-4bd7-8cbd-33d75729c881"),
+                            Id = new Guid("056cff93-297c-4145-8035-ded5cbc32c61"),
                             Description = "El préstamo, incluye recursos para la construcción del Parque Solar San Fernando (Meta) por cerca de US$35 millones",
                             Title = "Crédito de Scotiabank Colpatria por US$100 millones a AES Colombia",
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            Id = new Guid("7647ea63-46b0-4c71-b9db-29f1c972eac7"),
+                            Id = new Guid("9e77ccaf-98f6-426f-9f95-df113d985235"),
                             Description = "Se trata de Shopify, que brindará soporte y apoyo a comerciantes que no usan directamente su plataforma",
                             Title = "Google y Facebook firman asociación con empresa de pago en línea",
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            Id = new Guid("78451362-86fc-4662-9fd6-711b9565628e"),
+                            Id = new Guid("b0ec35d4-9a19-4e6d-8cd2-817b968c2bb8"),
                             Description = "Los delincuentes envían cartas a las viviendas de sus víctimas haciéndose pasar por la compañía Ledger. En el documento piden a las personas compartir su información en un nuevo dispositivo para supuestamente mantener los datos seguros",
                             Title = "Bitcóin: hackers tienen nuevo método para robar criptomonedas",
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            Id = new Guid("c2c9f618-53a0-49ce-8e0f-b1366e659937"),
+                            Id = new Guid("a6e7bad2-ac9c-407a-a0bb-2d32b51e794a"),
                             Description = "Habi, la startup con sede en Colombia, anunció este miércoles que recaudó 100 millones de dólares en la ronda de financiación de serie B por parte de SoftBank Latin American Fund, junto con inversores de Inspired Capital, Tiger Global, Homebrew y 8VC",
                             Title = "'Startup' Habi recauda 100 millones de dólares en ronda de inversión",
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            Id = new Guid("fc634a41-70da-4d63-ad07-eea34b883fe8"),
+                            Id = new Guid("c2cca9ea-b8c1-4abf-b70c-e47be5f06f92"),
                             Description = "Después de un año de ausencia por la pandemia, finalmente el Electronic Entertainment Expo (E3) volvió con varias novedades para los amantes de los videojuegos, aunque no cumplió todas las expectativas en materia de los anuncios que se tenían presupuestados",
                             Title = "E3: los mejores anuncios que dejó el evento en su edición virtual",
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
@@ -157,12 +157,6 @@ namespace Company.Domain.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("c651f92d-d9a1-45e8-9d04-3bb184da7a96"),
-                            DisplayName = "Administrador",
-                            Name = "AdminUser"
-                        },
-                        new
-                        {
                             Id = new Guid("590cb67a-5177-4bda-86e4-e5b80ac333c9"),
                             DisplayName = "Visitante",
                             Name = "VisitorUser"
@@ -178,6 +172,12 @@ namespace Company.Domain.Migrations
                             Id = new Guid("3cb57f96-7092-4842-a3a4-5e8302f6618d"),
                             DisplayName = "Editor",
                             Name = "EditorUser"
+                        },
+                        new
+                        {
+                            Id = new Guid("c651f92d-d9a1-45e8-9d04-3bb184da7a96"),
+                            DisplayName = "Administrador",
+                            Name = "AdminUser"
                         });
                 });
 
@@ -198,17 +198,32 @@ namespace Company.Domain.Migrations
                     b.HasData(
                         new
                         {
-                            RoleId = new Guid("c651f92d-d9a1-45e8-9d04-3bb184da7a96"),
-                            PermissionId = new Guid("e5472dd9-f0c1-4233-be69-cb59425a8407")
+                            RoleId = new Guid("590cb67a-5177-4bda-86e4-e5b80ac333c9"),
+                            PermissionId = new Guid("4f39c31e-ca99-4782-b585-ae847185a292")
                         },
                         new
                         {
-                            RoleId = new Guid("c651f92d-d9a1-45e8-9d04-3bb184da7a96"),
-                            PermissionId = new Guid("d3683aa7-defb-48ea-8459-b17a34a0c363")
+                            RoleId = new Guid("f7b2beba-7445-463d-8978-0b3b3940390c"),
+                            PermissionId = new Guid("69778186-75fd-445d-9993-b9f9b35d78bc")
                         },
                         new
                         {
-                            RoleId = new Guid("c651f92d-d9a1-45e8-9d04-3bb184da7a96"),
+                            RoleId = new Guid("f7b2beba-7445-463d-8978-0b3b3940390c"),
+                            PermissionId = new Guid("bfaa9995-bfa4-4c5b-b4dc-754be406cb18")
+                        },
+                        new
+                        {
+                            RoleId = new Guid("f7b2beba-7445-463d-8978-0b3b3940390c"),
+                            PermissionId = new Guid("f6176536-ac08-4607-b003-11caa3cc5e31")
+                        },
+                        new
+                        {
+                            RoleId = new Guid("f7b2beba-7445-463d-8978-0b3b3940390c"),
+                            PermissionId = new Guid("cb5095c0-02cd-4b10-8666-09eaafeda595")
+                        },
+                        new
+                        {
+                            RoleId = new Guid("f7b2beba-7445-463d-8978-0b3b3940390c"),
                             PermissionId = new Guid("4f39c31e-ca99-4782-b585-ae847185a292")
                         },
                         new
@@ -243,32 +258,17 @@ namespace Company.Domain.Migrations
                         },
                         new
                         {
-                            RoleId = new Guid("f7b2beba-7445-463d-8978-0b3b3940390c"),
-                            PermissionId = new Guid("69778186-75fd-445d-9993-b9f9b35d78bc")
+                            RoleId = new Guid("c651f92d-d9a1-45e8-9d04-3bb184da7a96"),
+                            PermissionId = new Guid("e5472dd9-f0c1-4233-be69-cb59425a8407")
                         },
                         new
                         {
-                            RoleId = new Guid("f7b2beba-7445-463d-8978-0b3b3940390c"),
-                            PermissionId = new Guid("bfaa9995-bfa4-4c5b-b4dc-754be406cb18")
+                            RoleId = new Guid("c651f92d-d9a1-45e8-9d04-3bb184da7a96"),
+                            PermissionId = new Guid("d3683aa7-defb-48ea-8459-b17a34a0c363")
                         },
                         new
                         {
-                            RoleId = new Guid("f7b2beba-7445-463d-8978-0b3b3940390c"),
-                            PermissionId = new Guid("f6176536-ac08-4607-b003-11caa3cc5e31")
-                        },
-                        new
-                        {
-                            RoleId = new Guid("f7b2beba-7445-463d-8978-0b3b3940390c"),
-                            PermissionId = new Guid("cb5095c0-02cd-4b10-8666-09eaafeda595")
-                        },
-                        new
-                        {
-                            RoleId = new Guid("f7b2beba-7445-463d-8978-0b3b3940390c"),
-                            PermissionId = new Guid("4f39c31e-ca99-4782-b585-ae847185a292")
-                        },
-                        new
-                        {
-                            RoleId = new Guid("590cb67a-5177-4bda-86e4-e5b80ac333c9"),
+                            RoleId = new Guid("c651f92d-d9a1-45e8-9d04-3bb184da7a96"),
                             PermissionId = new Guid("4f39c31e-ca99-4782-b585-ae847185a292")
                         });
                 });
