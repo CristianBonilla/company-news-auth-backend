@@ -1,16 +1,9 @@
-using AutoMapper;
-using Company.Domain;
-using Microsoft.Extensions.Options;
-using Microsoft.IdentityModel.Tokens;
-using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Security.Claims;
-using System.Text;
 using System.Threading.Tasks;
+using AutoMapper;
+using Company.Domain;
 
 namespace Company.API
 {
@@ -19,7 +12,7 @@ namespace Company.API
         readonly IMapper mapper;
         readonly IUserService userService;
         readonly IRolePermissionService rolePermissionService;
-        readonly JwtOptions jwtOptions;
+        readonly IJwtAuthentication jwtAuthentication;
 
         static Func<string, Expression<Func<UserEntity, bool>>> UserExistsExpression => usernameOrEmail =>
             user => user.Username == usernameOrEmail || user.Email == usernameOrEmail;
@@ -28,12 +21,12 @@ namespace Company.API
             IMapper mapper,
             IUserService userService,
             IRolePermissionService rolePermissionService,
-            IOptions<JwtOptions> options)
+            IJwtAuthentication jwtAuthentication)
         {
             this.mapper = mapper;
             this.userService = userService;
             this.rolePermissionService = rolePermissionService;
-            jwtOptions = options.Value;
+            this.jwtAuthentication = jwtAuthentication;
         }
 
         public async Task<bool> UserExits(string usernameOrEmail)
@@ -66,7 +59,7 @@ namespace Company.API
             UserEntity userMapped = mapper.Map<UserEntity>(userRegisterRequest, options => options.AfterMap((_, user) => user.Role = role));
             UserEntity userCreated = await userService.AddUser(userMapped);
 
-            return await GetJwtAuthentication(userCreated, role);
+            return await jwtAuthentication.GetAuthentication(userCreated, role);
         }
 
         public async Task<AuthenticationResult> Login(UserLoginRequest userLoginRequest)
@@ -91,45 +84,7 @@ namespace Company.API
             }
             RoleEntity roleFound = await rolePermissionService.FindRole(role => role.Id == userFound.RoleId);
 
-            return await GetJwtAuthentication(userFound, roleFound);
-        }
-
-        private async Task<AuthenticationResult> GetJwtAuthentication(UserEntity user, RoleEntity role)
-        {
-            var permissionsByRole = rolePermissionService.GetPermissionsByRole(role);
-            var permissionsMapped = mapper.Map<IAsyncEnumerable<PermissionResponse>>(permissionsByRole);
-            var permissions = await permissionsMapped.ToArrayAsync();
-            string permissionNamesJson = await GetPermissionNamesToJson(permissionsMapped);
-            JwtSecurityTokenHandler tokenHandler = new();
-            byte[] key = Encoding.ASCII.GetBytes(jwtOptions.Secret);
-            SecurityTokenDescriptor tokenDescriptor = new()
-            {
-                Subject = new ClaimsIdentity(new Claim[]
-                {
-                    new(JwtRegisteredClaimNames.Sub, user.Email),
-                    new(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                    new(JwtRegisteredClaimNames.Email, user.Email),
-                    new(JwtRegisteredClaimNames.NameId, user.Id.ToString()),
-                    new(ClaimTypes.NameIdentifier, user.Username),
-                    new(ClaimTypes.Role, role.Name),
-                    new(CommonValues.UserPermissions, permissionNamesJson, JsonClaimValueTypes.JsonArray)
-                }),
-                Expires = DateTime.UtcNow.AddDays(jwtOptions.ExpiresInDays),
-                SigningCredentials = new(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha512Signature)
-            };
-            SecurityToken securityToken = tokenHandler.CreateToken(tokenDescriptor);
-            string token = tokenHandler.WriteToken(securityToken);
-            UserResponse userResponse = mapper.Map<UserResponse>(user);
-            RoleResponse roleResponse = mapper.Map<RoleResponse>(role);
-
-            return new()
-            {
-                Success = true,
-                Token = token,
-                Permissions = permissions,
-                User = userResponse,
-                Role = roleResponse
-            };
+            return await jwtAuthentication.GetAuthentication(userFound, roleFound);
         }
 
         private async Task<RoleEntity> GetRole(string roleName = null)
@@ -140,18 +95,6 @@ namespace Company.API
             string defaultRoleName = isEmptyUsers ? RoleTypes.AdminUser : RoleTypes.VisitorUser;
 
             return await rolePermissionService.FindRole(role => role.Name == defaultRoleName);
-        }
-
-        private static async Task<string> GetPermissionNamesToJson(IAsyncEnumerable<PermissionResponse> permissions)
-        {
-            var permissionNames = await permissions.Select(permission => new
-            {
-                type = permission.Type,
-                names = permission.Content.Select(content => content.Name)
-            }).ToArrayAsync();
-            string permissionNamesToJson = JsonConvert.SerializeObject(permissionNames, Formatting.Indented);
-
-            return permissionNamesToJson;
         }
     }
 }
