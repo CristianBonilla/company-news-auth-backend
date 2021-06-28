@@ -42,7 +42,7 @@ namespace Company.API
                 return new()
                 {
                     Success = false,
-                    Errors = new[] { "The user with email, username or identification number provided already exists" }
+                    Errors = new[] { "User with email, username or identification number provided already exists" }
                 };
             }
             RoleEntity role = await GetRole(userRegisterRequest.Role);
@@ -51,7 +51,7 @@ namespace Company.API
                 return new()
                 {
                     Success = false,
-                    Errors = new[] { "The user cannot be created if an existing role is not specified" }
+                    Errors = new[] { "User cannot be created if an existing role is not specified" }
                 };
             }
             UserEntity userMapped = mapper.Map<UserEntity>(userRegisterRequest, options => options.AfterMap((_, user) => user.Role = role));

@@ -46,7 +46,7 @@ namespace Company.API.Controllers.V1
         {
             UserEntity userFound = await userService.FindUser(user => user.Id == userId);
             if (User == null)
-                return NotFound();
+                return NotFound(new { Errors = new[] { "User is not registered or is incorrect" } });
             UserResponse user = mapper.Map<UserResponse>(userFound);
 
             return Ok(user);
@@ -55,14 +55,13 @@ namespace Company.API.Controllers.V1
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] UserRegisterRequest userRegisterRequest)
         {
-            RoleEntity roleFound = await rolePermissionService.FindRole(role => role.Name == userRegisterRequest.Role);
-            if (roleFound == null)
-                return BadRequest(new { Errors = new[] { "The user cannot be created if an existing role is not specified" } });
-            UserEntity userMapped = mapper.Map<UserEntity>(userRegisterRequest);
-            userMapped.RoleId = roleFound.Id;
             bool existingUser = await authService.UserExists(userRegisterRequest);
             if (existingUser)
-                return BadRequest(new { Errors = new[] { "The user with email, username or identification number provided already exists" } });
+                return BadRequest(new { Errors = new[] { "User with email, username or identification number provided already exists" } });
+            RoleEntity roleFound = await rolePermissionService.FindRole(role => role.Name == userRegisterRequest.Role);
+            if (roleFound == null)
+                return BadRequest(new { Errors = new[] { "User cannot be created if an existing role is not specified" } });
+            UserEntity userMapped = mapper.Map<UserEntity>(userRegisterRequest, options => options.AfterMap((_, user) => user.RoleId = roleFound.Id));
             UserEntity userAdded = await userService.AddUser(userMapped);
             UserResponse user = mapper.Map<UserResponse>(userAdded);
 
@@ -74,7 +73,13 @@ namespace Company.API.Controllers.V1
         {
             UserEntity userFound = await userService.FindUser(user => user.Id == userId);
             if (userFound == null)
-                return NotFound();
+                return NotFound(new { Errors = new[] { "User is not registered or is incorrect" } });
+            bool existingUser = await authService.UserExists(userRegisterRequest);
+            if (existingUser)
+                return BadRequest(new { Errors = new[] { "User with email, username or identification number provided already exists" } });
+            RoleEntity roleFound = await rolePermissionService.FindRole(role => role.Name == userRegisterRequest.Role);
+            if (roleFound == null)
+                return BadRequest(new { Errors = new[] { "User cannot be edited if an existing role is not specified" } });
             UserEntity userMapped = mapper.Map(userRegisterRequest, userFound);
             UserEntity userEdited = await userService.EditUser(userMapped);
             UserResponse user = mapper.Map<UserResponse>(userEdited);
@@ -87,7 +92,7 @@ namespace Company.API.Controllers.V1
         {
             UserEntity userFound = await userService.FindUser(user => user.Id == userId);
             if (userFound == null)
-                return NotFound();
+                return NotFound(new { Errors = new[] { "User is not registered or is incorrect" } });
             _ = await userService.RemoveUser(userFound);
 
             return NoContent();
