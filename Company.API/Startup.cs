@@ -34,6 +34,7 @@ namespace Company.API
         // Register your own things directly with Autofac here.
         public void ConfigureContainer(ContainerBuilder builder)
         {
+            builder.RegisterModule<AuthModule>();
             builder.RegisterModule<DomainModule>();
         }
 
