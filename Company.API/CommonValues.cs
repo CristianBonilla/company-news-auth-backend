@@ -5,5 +5,6 @@ namespace Company.API
         public const string Bearer = nameof(Bearer);
         public const string CompanyAuthConnection = nameof(CompanyAuthConnection);
         public const string AllowOrigins = nameof(AllowOrigins);
+        public const string UserPermissions = nameof(UserPermissions);
     }
 }
