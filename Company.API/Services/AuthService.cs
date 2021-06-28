@@ -1,6 +1,4 @@
-using System;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 using AutoMapper;
 using Company.Domain;
@@ -14,9 +12,6 @@ namespace Company.API
         readonly IRolePermissionService rolePermissionService;
         readonly IJwtAuthentication jwtAuthentication;
 
-        static Func<string, Expression<Func<UserEntity, bool>>> UserExistsExpression => usernameOrEmail =>
-            user => user.Username == usernameOrEmail || user.Email == usernameOrEmail;
-
         public AuthService(
             IMapper mapper,
             IUserService userService,
@@ -29,18 +24,19 @@ namespace Company.API
             this.jwtAuthentication = jwtAuthentication;
         }
 
-        public async Task<bool> UserExits(string usernameOrEmail)
+        public async Task<bool> UserExists(UserRegisterRequest userRegisterRequest)
         {
-            bool existingUser = await userService.UserExists(UserExistsExpression(usernameOrEmail));
+            var (username, email, identificationNumber) = UserRegisterProperties(userRegisterRequest);
+            bool existingUser = await userService.UserExists(user => user.Username == username) ||
+                await userService.UserExists(user => user.Email == email) ||
+                await userService.UserExists(user => user.IdentificationNumber == identificationNumber);
 
             return existingUser;
         }
 
         public async Task<AuthResult> Register(UserRegisterRequest userRegisterRequest)
         {
-            bool existingUser = await UserExits(userRegisterRequest.Username) ||
-                await UserExits(userRegisterRequest.Email) ||
-                await userService.UserExists(user => user.IdentificationNumber == userRegisterRequest.IdentificationNumber);
+            bool existingUser = await UserExists(userRegisterRequest);
             if (existingUser)
             {
                 return new()
@@ -66,8 +62,8 @@ namespace Company.API
 
         public async Task<AuthResult> Login(UserLoginRequest userLoginRequest)
         {
-            string usernameOrEmail = userLoginRequest.UsernameOrEmail;
-            UserEntity userFound = await userService.FindUser(UserExistsExpression(userLoginRequest.UsernameOrEmail));
+            var (usernameOrEmail, password) = UserLoginProperties(userLoginRequest);
+            UserEntity userFound = await userService.FindUser(user => user.Username == usernameOrEmail || user.Email == usernameOrEmail);
             if (userFound == null)
             {
                 return new()
@@ -76,7 +72,7 @@ namespace Company.API
                     Errors = new[] { "User is not registered or is incorrect" }
                 };
             }
-            if (userFound.Password != userLoginRequest.Password)
+            if (userFound.Password != password)
             {
                 return new()
                 {
@@ -98,5 +94,16 @@ namespace Company.API
 
             return await rolePermissionService.FindRole(role => role.Name == defaultRoleName);
         }
+
+        private static (string Username, string Email, long IdentificationNumber) UserRegisterProperties(
+            UserRegisterRequest userRegisterRequest) => (
+                userRegisterRequest.Username,
+                userRegisterRequest.Email,
+                userRegisterRequest.IdentificationNumber);
+
+        private static (string UsernameOrEmail, string Password) UserLoginProperties(
+            UserLoginRequest userLoginRequest) => (
+                userLoginRequest.UsernameOrEmail,
+                userLoginRequest.Password);
     }
 }

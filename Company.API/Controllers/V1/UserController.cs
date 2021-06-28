@@ -19,9 +19,19 @@ namespace Company.API.Controllers.V1
         readonly IMapper mapper;
         readonly IRolePermissionService rolePermissionService;
         readonly IUserService userService;
+        readonly IAuthService authService;
 
-        public UserController(IMapper mapper, IRolePermissionService rolePermissionService, IUserService userService) =>
-            (this.mapper, this.rolePermissionService, this.userService) = (mapper, rolePermissionService, userService);
+        public UserController(
+            IMapper mapper,
+            IRolePermissionService rolePermissionService,
+            IUserService userService,
+            IAuthService authService)
+        {
+            this.mapper = mapper;
+            this.rolePermissionService = rolePermissionService;
+            this.userService = userService;
+            this.authService = authService;
+        }
 
         [HttpGet]
         public async IAsyncEnumerable<UserResponse> Get()
@@ -50,6 +60,9 @@ namespace Company.API.Controllers.V1
                 return BadRequest(new { Errors = new[] { "The user cannot be created if an existing role is not specified" } });
             UserEntity userMapped = mapper.Map<UserEntity>(userRegisterRequest);
             userMapped.RoleId = roleFound.Id;
+            bool existingUser = await authService.UserExists(userRegisterRequest);
+            if (existingUser)
+                return BadRequest(new { Errors = new[] { "The user with email, username or identification number provided already exists" } });
             UserEntity userAdded = await userService.AddUser(userMapped);
             UserResponse user = mapper.Map<UserResponse>(userAdded);
 
