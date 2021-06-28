@@ -4,23 +4,10 @@ namespace Company.Domain
 {
     abstract class DefaultUserRoles
     {
-        protected static NewsCollection News => new();
-        protected static RolesCollection Roles => new();
-        protected static UsersCollection Users => new();
+        protected static NewsPermissionCollection News => new();
+        protected static RolePermissionCollection Roles => new();
+        protected static UserPermissionCollection Users => new();
 
-        protected static (RoleEntity Role, Guid[] PermissionIDs) AdminUser => (
-            new()
-            {
-               Id = new Guid("c651f92d-d9a1-45e8-9d04-3bb184da7a96"),
-               Name = nameof(AdminUser),
-               DisplayName = "Administrador"
-            },
-            new[]
-            {
-                Roles[RoleTypes.ALL].Value,
-                Users[UserTypes.ALL].Value,
-                News[NewsType.ALL].Value
-            });
         protected static (RoleEntity Role, Guid[] PermissionIDs) VisitorUser => (
             new()
             {
@@ -28,7 +15,7 @@ namespace Company.Domain
                 Name = nameof(VisitorUser),
                 DisplayName = "Visitante"
             },
-            new[] { News[NewsType.ALL].Value });
+            new[] { News[NewsPermissionType.ALL].Value });
         protected static (RoleEntity Role, Guid[] PermissionIDs) AssistantUser => (
             new()
             {
@@ -38,11 +25,11 @@ namespace Company.Domain
             },
             new[]
             {
-                Roles[RoleTypes.GetRoles].Value,
-                Roles[RoleTypes.GetRoleById].Value,
-                Users[UserTypes.GetUsers].Value,
-                Users[UserTypes.GetUserById].Value,
-                News[NewsType.ALL].Value
+                Roles[RolePermissionTypes.GetRoles].Value,
+                Roles[RolePermissionTypes.GetRoleById].Value,
+                Users[UserPermissionTypes.GetUsers].Value,
+                Users[UserPermissionTypes.GetUserById].Value,
+                News[NewsPermissionType.ALL].Value
             });
         protected static (RoleEntity Role, Guid[] PermissionIDs) EditorUser => (
             new()
@@ -53,12 +40,25 @@ namespace Company.Domain
             },
             new[]
             {
-                Roles[RoleTypes.GetRoles].Value,
-                Roles[RoleTypes.GetRoleById].Value,
-                Users[UserTypes.GetUsers].Value,
-                Users[UserTypes.GetUserById].Value,
-                Users[UserTypes.EditUser].Value,
-                News[NewsType.ALL].Value
+                Roles[RolePermissionTypes.GetRoles].Value,
+                Roles[RolePermissionTypes.GetRoleById].Value,
+                Users[UserPermissionTypes.GetUsers].Value,
+                Users[UserPermissionTypes.GetUserById].Value,
+                Users[UserPermissionTypes.EditUser].Value,
+                News[NewsPermissionType.ALL].Value
+            });
+        protected static (RoleEntity Role, Guid[] PermissionIDs) AdminUser => (
+            new()
+            {
+                Id = new Guid("c651f92d-d9a1-45e8-9d04-3bb184da7a96"),
+                Name = nameof(AdminUser),
+                DisplayName = "Administrador"
+            },
+            new[]
+            {
+                Roles[RolePermissionTypes.ALL].Value,
+                Users[UserPermissionTypes.ALL].Value,
+                News[NewsPermissionType.ALL].Value
             });
     }
 }
