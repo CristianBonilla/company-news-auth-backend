@@ -7,6 +7,7 @@ namespace Company.Domain
 {
     public interface IUserService
     {
+        Task<bool> UserExists(Expression<Func<UserEntity, bool>> expression);
         Task<UserEntity> FindUser(Expression<Func<UserEntity, bool>> expression);
         IAsyncEnumerable<UserEntity> GetUsers();
         Task<UserEntity> AddUser(UserEntity user);

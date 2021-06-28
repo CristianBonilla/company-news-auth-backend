@@ -14,6 +14,13 @@ namespace Company.Domain
         public UserService(IDataContext context, IUserRepository userRepository) =>
             (this.context, this.userRepository) = (context, userRepository);
 
+        public Task<bool> UserExists(Expression<Func<UserEntity, bool>> expression)
+        {
+            bool existingUser = userRepository.Exists(expression);
+
+            return Task.FromResult(existingUser);
+        }
+
         public async Task<UserEntity> AddUser(UserEntity user)
         {
             UserEntity userAdded = userRepository.Create(user);
