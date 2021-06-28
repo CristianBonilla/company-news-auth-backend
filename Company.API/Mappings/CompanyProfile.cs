@@ -1,6 +1,6 @@
+using System.Collections.Generic;
 using AutoMapper;
 using Company.Domain;
-using System.Collections.Generic;
 
 namespace Company.API
 {

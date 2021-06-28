@@ -5,6 +5,8 @@ namespace Company.API
         public const string Bearer = nameof(Bearer);
         public const string CompanyAuthConnection = nameof(CompanyAuthConnection);
         public const string AllowOrigins = nameof(AllowOrigins);
-        public const string UserPermissions = nameof(UserPermissions);
+        public static string UserPermissions => ToCamelCase(nameof(UserPermissions));
+
+        private static string ToCamelCase(string source) => char.ToLowerInvariant(source[0]) + source[1..];
     }
 }

@@ -1,19 +1,19 @@
-using AutoMapper;
-using Company.Domain;
+using System;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Security.Claims;
+using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
-using System.Security.Claims;
-using System.Text;
-using System.Threading.Tasks;
+using AutoMapper;
+using Company.Domain;
 
 namespace Company.API
 {
-    class JwtAuthentication : IJwtAuthentication
+    public class JwtAuthentication : IJwtAuthentication
     {
         readonly IMapper mapper;
         readonly IRolePermissionService rolePermissionService;
@@ -29,12 +29,12 @@ namespace Company.API
             jwtOptions = options.Value;
         }
 
-        public async Task<AuthenticationResult> GetAuthentication(UserEntity user, RoleEntity role)
+        public async Task<AuthResult> GetAuthentication(UserEntity user, RoleEntity role)
         {
             var permissionsByRole = rolePermissionService.GetPermissionsByRole(role);
             var permissionsMapped = mapper.Map<IAsyncEnumerable<PermissionResponse>>(permissionsByRole);
             var permissions = await permissionsMapped.ToArrayAsync();
-            string permissionNamesJson = await GetPermissionNamesToJson(permissionsMapped);
+            var (permissionNamesJson, jsonClaimType) = await GetPermissionNamesToJson(permissionsMapped);
             JwtSecurityTokenHandler tokenHandler = new();
             byte[] key = Encoding.ASCII.GetBytes(jwtOptions.Secret);
             SecurityTokenDescriptor tokenDescriptor = new()
@@ -45,9 +45,10 @@ namespace Company.API
                     new(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                     new(JwtRegisteredClaimNames.Email, user.Email),
                     new(JwtRegisteredClaimNames.NameId, user.Id.ToString()),
-                    new(ClaimTypes.NameIdentifier, user.Username),
+                    new(JwtRegisteredClaimNames.UniqueName, $"{ user.Username }, { user.FirstName } { user.LastName }"),
                     new(ClaimTypes.Role, role.Name),
-                    new(CommonValues.UserPermissions, permissionNamesJson, JsonClaimValueTypes.JsonArray)
+                    new(ClaimTypes.MobilePhone, user.Phone),
+                    new(CommonValues.UserPermissions, permissionNamesJson, jsonClaimType)
                 }),
                 Expires = DateTime.UtcNow.AddDays(jwtOptions.ExpiresInDays),
                 SigningCredentials = new(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha512Signature)
@@ -67,16 +68,15 @@ namespace Company.API
             };
         }
 
-        private static async Task<string> GetPermissionNamesToJson(IAsyncEnumerable<PermissionResponse> permissions)
+        private static async Task<(string PermissionNamesJson, string JsonClaimType)> GetPermissionNamesToJson(
+            IAsyncEnumerable<PermissionResponse> permissions)
         {
-            var permissionNames = await permissions.Select(permission => new
-            {
-                type = permission.Type,
-                names = permission.Content.Select(content => content.Name)
-            }).ToArrayAsync();
-            string permissionNamesToJson = JsonConvert.SerializeObject(permissionNames, Formatting.Indented);
+            var permissionNames = await permissions.ToDictionaryAsync(
+                permission => permission.Type,
+                permission => permission.Content.Select(content => content.Name));
+            string permissionNamesJson = JsonConvert.SerializeObject(permissionNames, Formatting.Indented);
 
-            return permissionNamesToJson;
+            return (permissionNamesJson, JsonClaimValueTypes.Json);
         }
     }
 }

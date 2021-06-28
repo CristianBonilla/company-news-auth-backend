@@ -3,8 +3,8 @@ using Company.Domain;
 
 namespace Company.API
 {
-    interface IJwtAuthentication
+    public interface IJwtAuthentication
     {
-        Task<AuthenticationResult> GetAuthentication(UserEntity user, RoleEntity role);
+        Task<AuthResult> GetAuthentication(UserEntity user, RoleEntity role);
     }
 }

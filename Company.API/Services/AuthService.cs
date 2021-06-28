@@ -7,7 +7,7 @@ using Company.Domain;
 
 namespace Company.API
 {
-    class AuthService : IAuthService
+    public class AuthService : IAuthService
     {
         readonly IMapper mapper;
         readonly IUserService userService;
@@ -36,18 +36,20 @@ namespace Company.API
             return existingUser;
         }
 
-        public async Task<AuthenticationResult> Register(UserRegisterRequest userRegisterRequest, string roleName = null)
+        public async Task<AuthResult> Register(UserRegisterRequest userRegisterRequest)
         {
-            bool existingUser = await UserExits(userRegisterRequest.Username) || await UserExits(userRegisterRequest.Email);
+            bool existingUser = await UserExits(userRegisterRequest.Username) ||
+                await UserExits(userRegisterRequest.Email) ||
+                await userService.UserExists(user => user.IdentificationNumber == userRegisterRequest.IdentificationNumber);
             if (existingUser)
             {
                 return new()
                 {
                     Success = false,
-                    Errors = new[] { "User with provided email or username already exists" }
+                    Errors = new[] { "The user with email, username or identification number provided already exists" }
                 };
             }
-            RoleEntity role = await GetRole(roleName);
+            RoleEntity role = await GetRole(userRegisterRequest.Role);
             if (role == null)
             {
                 return new()
@@ -62,7 +64,7 @@ namespace Company.API
             return await jwtAuthentication.GetAuthentication(userCreated, role);
         }
 
-        public async Task<AuthenticationResult> Login(UserLoginRequest userLoginRequest)
+        public async Task<AuthResult> Login(UserLoginRequest userLoginRequest)
         {
             string usernameOrEmail = userLoginRequest.UsernameOrEmail;
             UserEntity userFound = await userService.FindUser(UserExistsExpression(userLoginRequest.UsernameOrEmail));
