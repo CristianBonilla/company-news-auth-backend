@@ -2,7 +2,7 @@ using System;
 
 namespace Company.Domain
 {
-    abstract class DefaultUserRoles
+    abstract class DefaultDataByUserRole
     {
         protected static NewsPermissionCollection News => new();
         protected static RolePermissionCollection Roles => new();
@@ -15,7 +15,7 @@ namespace Company.Domain
                 Name = nameof(VisitorUser),
                 DisplayName = "Visitante"
             },
-            new[] { News[NewsPermissionType.ALL].Value });
+            new[] { News[NewsPermissionTypes.ALL].Value });
         protected static (RoleEntity Role, Guid[] PermissionIDs) AssistantUser => (
             new()
             {
@@ -29,7 +29,7 @@ namespace Company.Domain
                 Roles[RolePermissionTypes.GetRoleById].Value,
                 Users[UserPermissionTypes.GetUsers].Value,
                 Users[UserPermissionTypes.GetUserById].Value,
-                News[NewsPermissionType.ALL].Value
+                News[NewsPermissionTypes.ALL].Value
             });
         protected static (RoleEntity Role, Guid[] PermissionIDs) EditorUser => (
             new()
@@ -45,7 +45,7 @@ namespace Company.Domain
                 Users[UserPermissionTypes.GetUsers].Value,
                 Users[UserPermissionTypes.GetUserById].Value,
                 Users[UserPermissionTypes.EditUser].Value,
-                News[NewsPermissionType.ALL].Value
+                News[NewsPermissionTypes.ALL].Value
             });
         protected static (RoleEntity Role, Guid[] PermissionIDs) AdminUser => (
             new()
@@ -58,7 +58,7 @@ namespace Company.Domain
             {
                 Roles[RolePermissionTypes.ALL].Value,
                 Users[UserPermissionTypes.ALL].Value,
-                News[NewsPermissionType.ALL].Value
+                News[NewsPermissionTypes.ALL].Value
             });
     }
 }

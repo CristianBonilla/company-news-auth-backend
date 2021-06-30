@@ -1,6 +1,6 @@
 namespace Company.Domain
 {
-    public struct RoleTypes
+    public struct DefaultRoles
     {
         public const string VisitorUser = nameof(VisitorUser);
         public const string AssistantUser = nameof(AssistantUser);

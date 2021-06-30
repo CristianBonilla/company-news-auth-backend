@@ -50,9 +50,9 @@ namespace Company.Domain
             builder.HasIndex(index => new { index.Type, index.Name })
                 .IsUnique();
             builder.HasDiscriminator(discriminator => discriminator.Type)
-                .HasValue<RolesPermission>(PermissionTypes.CanRoles)
-                .HasValue<UsersPermission>(PermissionTypes.CanUsers)
-                .HasValue<NewsPermission>(PermissionTypes.CanNews)
+                .HasValue<RolesPermission>(DefaultPermissions.CanRoles)
+                .HasValue<UsersPermission>(DefaultPermissions.CanUsers)
+                .HasValue<NewsPermission>(DefaultPermissions.CanNews)
                 .IsComplete();
         }
 

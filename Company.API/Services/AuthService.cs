@@ -90,7 +90,7 @@ namespace Company.API
             bool isEmptyUsers = !(await userService.GetUsers().AnyAsync());
             if (!isEmptyUsers && roleName != null)
                 return await rolePermissionService.FindRole(role => role.Name == roleName);
-            string defaultRoleName = isEmptyUsers ? RoleTypes.AdminUser : RoleTypes.VisitorUser;
+            string defaultRoleName = isEmptyUsers ? DefaultRoles.AdminUser : DefaultRoles.VisitorUser;
 
             return await rolePermissionService.FindRole(role => role.Name == defaultRoleName);
         }

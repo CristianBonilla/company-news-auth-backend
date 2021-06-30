@@ -3,16 +3,6 @@ using System.Linq;
 
 namespace Company.Domain
 {
-    enum UserPermissionTypes
-    {
-        ALL,
-        GetUsers,
-        GetUserById,
-        AddUser,
-        EditUser,
-        RemoveUser
-    }
-
     class UserPermissionCollection
     {
         public UsersPermission[] List { get; } =

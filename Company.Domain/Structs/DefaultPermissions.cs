@@ -1,6 +1,6 @@
 namespace Company.Domain
 {
-    public struct PermissionTypes
+    public struct DefaultPermissions
     {
         public const string CanRoles = nameof(CanRoles);
         public const string CanUsers = nameof(CanUsers);

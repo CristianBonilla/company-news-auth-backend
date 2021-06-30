@@ -3,15 +3,6 @@ using System.Linq;
 
 namespace Company.Domain
 {
-    enum RolePermissionTypes
-    {
-        ALL,
-        GetRoles,
-        GetRoleById,
-        GetPermissions,
-        GetPermissionsByRole
-    }
-
     class RolePermissionCollection
     {
         public RolesPermission[] List { get; } =

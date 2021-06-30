@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Company.Domain
 {
-    class SeedData : DefaultUserRoles
+    class SeedData : DefaultDataByUserRole
     {
         public static IEnumerable<NewsEntity> SeedNews { get; } = new NewsEntity[]
         {
