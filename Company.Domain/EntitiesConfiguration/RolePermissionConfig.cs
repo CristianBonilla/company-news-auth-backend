@@ -1,3 +1,4 @@
+using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -50,9 +51,9 @@ namespace Company.Domain
             builder.HasIndex(index => new { index.Type, index.Name })
                 .IsUnique();
             builder.HasDiscriminator(discriminator => discriminator.Type)
-                .HasValue<RolesPermission>(DefaultPermissions.CanRoles)
-                .HasValue<UsersPermission>(DefaultPermissions.CanUsers)
-                .HasValue<NewsPermission>(DefaultPermissions.CanNews)
+                .HasValue<RolesPermission>(Enum.GetName(DefaultPermissionTypes.CanRoles))
+                .HasValue<UsersPermission>(Enum.GetName(DefaultPermissionTypes.CanUsers))
+                .HasValue<NewsPermission>(Enum.GetName(DefaultPermissionTypes.CanNews))
                 .IsComplete();
         }
 

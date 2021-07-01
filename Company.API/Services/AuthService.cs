@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -90,7 +91,7 @@ namespace Company.API
             bool isEmptyUsers = !(await userService.GetUsers().AnyAsync());
             if (!isEmptyUsers && roleName != null)
                 return await rolePermissionService.FindRole(role => role.Name == roleName);
-            string defaultRoleName = isEmptyUsers ? DefaultRoles.AdminUser : DefaultRoles.VisitorUser;
+            string defaultRoleName = Enum.GetName(isEmptyUsers ? DefaultRoleTypes.AdminUser : DefaultRoleTypes.VisitorUser);
 
             return await rolePermissionService.FindRole(role => role.Name == defaultRoleName);
         }
