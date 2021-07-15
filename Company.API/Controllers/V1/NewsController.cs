@@ -13,7 +13,10 @@ namespace Company.API.Controllers.V1
 {
     [Route("api/v1/[controller]")]
     [ApiController]
-    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+    [PermissionsAuthorize(
+        CanNews = new[] { NewsPermissionTypes.ALL },
+        AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme
+    )]
     public class NewsController : ControllerBase
     {
         readonly IMapper mapper;
@@ -23,6 +26,9 @@ namespace Company.API.Controllers.V1
             (this.mapper, this.newsService) = (mapper, newsService);
 
         [HttpGet]
+        [PermissionsAuthorize(
+            CanNews = new[] { NewsPermissionTypes.GetNews }
+        )]
         public async IAsyncEnumerable<NewsResponse> Get()
         {
             var newsList = newsService.GetNews();
@@ -31,6 +37,9 @@ namespace Company.API.Controllers.V1
         }
 
         [HttpGet("{newsId:guid}")]
+        [PermissionsAuthorize(
+            CanNews = new[] { NewsPermissionTypes.GetNewsById }
+        )]
         public async Task<IActionResult> Get(Guid newsId)
         {
             NewsEntity newsFound = await newsService.FindNews(news => news.Id == newsId);

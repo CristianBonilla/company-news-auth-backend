@@ -13,7 +13,10 @@ namespace Company.API.Controllers.V1
 {
     [Route("api/v1/[controller]")]
     [ApiController]
-    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+    [PermissionsAuthorize(
+        CanRoles = new[] { RolePermissionTypes.ALL },
+        AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme
+    )]
     public class RoleController : ControllerBase
     {
         readonly IMapper mapper;
@@ -23,6 +26,9 @@ namespace Company.API.Controllers.V1
             (this.mapper, this.rolePermissionService) = (mapper, rolePermissionService);
 
         [HttpGet]
+        [PermissionsAuthorize(
+            CanRoles = new[] { RolePermissionTypes.GetRoles }
+        )]
         public async IAsyncEnumerable<RoleResponse> Get()
         {
             var roles = rolePermissionService.GetRoles();
@@ -31,6 +37,10 @@ namespace Company.API.Controllers.V1
         }
 
         [HttpGet("{roleId:guid}")]
+        [PermissionsAuthorize(
+            CanRoles = new[] { RolePermissionTypes.GetRoleById },
+            CanUsers = new[] { UserPermissionTypes.GetUserById }
+        )]
         public async Task<IActionResult> Get(Guid roleId)
         {
             RoleEntity roleFound = await rolePermissionService.FindRole(role => role.Id == roleId);
@@ -42,6 +52,9 @@ namespace Company.API.Controllers.V1
         }
 
         [HttpGet("{roleId:guid}/permissions")]
+        [PermissionsAuthorize(
+            CanRoles = new[] { RolePermissionTypes.GetRoleById, RolePermissionTypes.GetPermissionsByRole }
+        )]
         public async Task<IActionResult> GetPermissionsByRole(Guid roleId)
         {
             RoleEntity roleFound = await rolePermissionService.FindRole(role => role.Id == roleId);

@@ -13,7 +13,10 @@ namespace Company.API.Controllers.V1
 {
     [Route("api/v1/[controller]")]
     [ApiController]
-    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+    [PermissionsAuthorize(
+        CanUsers = new[] { UserPermissionTypes.ALL },
+        AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme
+    )]
     public class UserController : ControllerBase
     {
         readonly IMapper mapper;
@@ -34,6 +37,9 @@ namespace Company.API.Controllers.V1
         }
 
         [HttpGet]
+        [PermissionsAuthorize(
+            CanUsers = new[] { UserPermissionTypes.GetUsers }
+        )]
         public async IAsyncEnumerable<UserResponse> Get()
         {
             var users = userService.GetUsers();
@@ -42,6 +48,9 @@ namespace Company.API.Controllers.V1
         }
 
         [HttpGet("{userId:guid}")]
+        [PermissionsAuthorize(
+            CanUsers = new[] { UserPermissionTypes.GetUserById }
+        )]
         public async Task<IActionResult> Get(Guid userId)
         {
             UserEntity userFound = await userService.FindUser(user => user.Id == userId);
@@ -53,6 +62,9 @@ namespace Company.API.Controllers.V1
         }
 
         [HttpPost]
+        [PermissionsAuthorize(
+            CanUsers = new[] { UserPermissionTypes.AddUser }
+        )]
         public async Task<IActionResult> Post([FromBody] UserRegisterRequest userRegisterRequest)
         {
             bool existingUser = await authService.UserExists(userRegisterRequest);
@@ -69,6 +81,9 @@ namespace Company.API.Controllers.V1
         }
 
         [HttpPut("{userId:guid}")]
+        [PermissionsAuthorize(
+            CanUsers = new[] { UserPermissionTypes.EditUser }
+        )]
         public async Task<IActionResult> Put(Guid userId, [FromBody] UserRegisterRequest userRegisterRequest)
         {
             UserEntity userFound = await userService.FindUser(user => user.Id == userId);
@@ -88,6 +103,9 @@ namespace Company.API.Controllers.V1
         }
 
         [HttpDelete("{userId:guid}")]
+        [PermissionsAuthorize(
+            CanUsers = new[] { UserPermissionTypes.RemoveUser }
+        )]
         public async Task<IActionResult> Delete(Guid userId)
         {
             UserEntity userFound = await userService.FindUser(user => user.Id == userId);

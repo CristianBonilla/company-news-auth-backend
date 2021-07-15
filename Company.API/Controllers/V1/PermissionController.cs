@@ -23,6 +23,9 @@ namespace Company.API.Controllers.V1
             (this.mapper, this.rolePermissionService) = (mapper, rolePermissionService);
 
         [HttpGet]
+        [PermissionsAuthorize(
+            CanRoles = new[] { RolePermissionTypes.GetPermissions }
+        )]
         public IAsyncEnumerable<PermissionResponse> Get()
         {
             var permissions = rolePermissionService.GetPermissions();
