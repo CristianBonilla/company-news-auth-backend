@@ -15,7 +15,7 @@ namespace Company.Domain
                 Name = nameof(VisitorUser),
                 DisplayName = "Visitante"
             },
-            new[] { News[NewsPermissionTypes.ALL].Value });
+            new[] { News[NewsPermissionTypes.ALL] });
         protected static (RoleEntity Role, Guid[] PermissionIDs) AssistantUser => (
             new()
             {
@@ -25,11 +25,11 @@ namespace Company.Domain
             },
             new[]
             {
-                Roles[RolePermissionTypes.GetRoles].Value,
-                Roles[RolePermissionTypes.GetRoleById].Value,
-                Users[UserPermissionTypes.GetUsers].Value,
-                Users[UserPermissionTypes.GetUserById].Value,
-                News[NewsPermissionTypes.ALL].Value
+                Roles[RolePermissionTypes.GetRoles],
+                Roles[RolePermissionTypes.GetRoleById],
+                Users[UserPermissionTypes.GetUsers],
+                Users[UserPermissionTypes.GetUserById],
+                News[NewsPermissionTypes.ALL]
             });
         protected static (RoleEntity Role, Guid[] PermissionIDs) EditorUser => (
             new()
@@ -40,12 +40,12 @@ namespace Company.Domain
             },
             new[]
             {
-                Roles[RolePermissionTypes.GetRoles].Value,
-                Roles[RolePermissionTypes.GetRoleById].Value,
-                Users[UserPermissionTypes.GetUsers].Value,
-                Users[UserPermissionTypes.GetUserById].Value,
-                Users[UserPermissionTypes.EditUser].Value,
-                News[NewsPermissionTypes.ALL].Value
+                Roles[RolePermissionTypes.GetRoles],
+                Roles[RolePermissionTypes.GetRoleById],
+                Users[UserPermissionTypes.GetUsers],
+                Users[UserPermissionTypes.GetUserById],
+                Users[UserPermissionTypes.EditUser],
+                News[NewsPermissionTypes.ALL]
             });
         protected static (RoleEntity Role, Guid[] PermissionIDs) AdminUser => (
             new()
@@ -56,9 +56,9 @@ namespace Company.Domain
             },
             new[]
             {
-                Roles[RolePermissionTypes.ALL].Value,
-                Users[UserPermissionTypes.ALL].Value,
-                News[NewsPermissionTypes.ALL].Value
+                Roles[RolePermissionTypes.ALL],
+                Users[UserPermissionTypes.ALL],
+                News[NewsPermissionTypes.ALL]
             });
     }
 }

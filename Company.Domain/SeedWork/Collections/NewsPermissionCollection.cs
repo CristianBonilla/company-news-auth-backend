@@ -30,6 +30,6 @@ namespace Company.Domain
             }
         };
 
-        public Guid? this[NewsPermissionTypes type] => List.SingleOrDefault(permission => permission.Name == Enum.GetName(type))?.Id;
+        public Guid this[NewsPermissionTypes type] => List.Single(permission => permission.Name == Enum.GetName(type)).Id;
     }
 }
